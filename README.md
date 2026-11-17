@@ -43,6 +43,14 @@ Same pattern as Leadcrystal: push to `main`, `.github/workflows/deploy.yml` buil
 `deploy` branch, and Hostinger pulls `deploy` into public_html (plain Git deploy, cron runs
 `server/hostinger-deploy.sh`). Never use hPanel's "Connect with GitHub" for this repo.
 
+Live setup (17 Nov 2026), Position Xero's shared plan, account u531579581 on srv1340:
+
+- **othaimeengrp.com** website: Git-cloned `deploy` branch in public_html. Cron `LI7gx0c0gu` runs
+  `othaimeen-private/deploy.sh` every 5 min. Not live until the domain's A record points here.
+- **Preview** at https://inner-lavenderblush-marten-70.hostingersite.com (noindex). Cron `dh2X111GHZ` runs the
+  same script with the preview folder as its argument. Delete the site and that cron after go-live.
+- `/version.txt` shows which commit each site is serving; `othaimeen-private/deploy.log` records each pull.
+
 Mail settings live outside the repo in `domains/othaimeengrp.com/othaimeen-private/config.php`
 (see `server/api/config.example.php`). With no password set, enquiries are logged to
 `othaimeen-private/data/submissions.jsonl` and not emailed.

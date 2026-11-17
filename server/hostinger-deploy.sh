@@ -1,11 +1,12 @@
 #!/bin/sh
 # Pulls the built Bin Othaimeen Group site (the `deploy` branch of Keegshaumann/othaimeen-website) into
 # public_html. Run by an hPanel cron job every 5 minutes. Logs only changes and errors.
-# If the website's folder changes (e.g. othaimeengrp.com replaces the temporary domain), update ROOT.
-ROOT=/home/u531579581/domains/othaimeengrp.com
+# Usage: hostinger-deploy.sh [site folder]   (default: the othaimeengrp.com website)
+ROOT=${1:-/home/u531579581/domains/othaimeengrp.com}
 REPO=https://github.com/Keegshaumann/othaimeen-website.git
 export PATH=/usr/local/bin:/usr/bin:/bin
 export HOME=/home/u531579581
+mkdir -p "$ROOT/othaimeen-private"
 LOG="$ROOT/othaimeen-private/deploy.log"
 now() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 g() { git -c safe.directory='*' "$@"; }
