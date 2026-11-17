@@ -1,0 +1,759 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Star from "../components/Star.astro";
+import NewsCard from "../components/NewsCard.astro";
+import posts from "../data/posts.json";
+import { SITE, GROUPS, PARTNERS, VALUES, servicesIn, serviceUrl } from "../site";
+
+const pillars = [
+  { ...GROUPS[0], href: "/services/#advisory" },
+  { ...GROUPS[1], href: "/services/#marketing" },
+  {
+    key: "trading",
+    label: "Trading & Logistics",
+    blurb:
+      "Confidently navigate through any challenges that may arise when operating in the GCC. Craft customized strategies that drive growth and ensure long-term success.",
+    href: "/leadcrystal/",
+  },
+];
+---
+
+<Base
+  title="Bin Othaimeen Group | Helping Companies Navigate the GCC"
+  description="Bin Othaimeen Group is a Riyadh-based business services and holding company. Advisory and consulting, marketing and digital, and trading and logistics for companies doing business in Saudi Arabia and the GCC."
+>
+  <!-- Hero -->
+  <section class="hero dark">
+    <picture class="hero-bg" aria-hidden="true">
+      <source media="(max-width: 800px)" srcset="/images/photo/kingdom-night-900.webp" />
+      <img src="/images/photo/kingdom-night-1800.webp" alt="" width="1800" height="1000" fetchpriority="high" />
+    </picture>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Bin Othaimeen Group · Riyadh</p>
+        <h1 class="display">Helping companies navigate <em>the&nbsp;GCC.</em></h1>
+        <p class="lede">Dive into unparalleled expertise, guiding your ambitions to fruition in the dynamic GCC landscape.</p>
+        <div class="actions">
+          <a class="btn" href="#what-we-do">Find out more <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="/contact/">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="arch">
+          <img
+            src="/images/photo/riyadh-skyline-1200.webp"
+            srcset="/images/photo/riyadh-skyline-640.webp 640w, /images/photo/riyadh-skyline-1200.webp 1200w"
+            sizes="(max-width: 900px) 80vw, 480px"
+            alt="Riyadh skyline at sunset with the Al Faisaliah and Kingdom Centre towers"
+            width="1200"
+            height="627"
+          />
+        </div>
+        <span class="arch-line"></span>
+        <p class="coords">24.68° N<br />46.62° E</p>
+      </div>
+    </div>
+    <div class="wrap hero-foot">
+      {
+        pillars.map((p, i) => (
+          <a href={p.href}>
+            <span class="n">0{i + 1}</span>
+            {p.label}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Adding value -->
+  <section class="section paper on-light" id="what-we-do">
+    <div class="wrap">
+      <div class="intro" data-reveal>
+        <p class="eyebrow">What we do</p>
+        <h2 class="h-xl">Adding value at <em>every stage.</em></h2>
+      </div>
+      <div class="pillars">
+        {
+          pillars.map((p, i) => (
+            <article class="pillar" data-reveal style={`--d:${i}`}>
+              <span class="n">0{i + 1}</span>
+              <h3>{p.label}</h3>
+              <p>{p.blurb}</p>
+              <a class="link-arrow" href={p.href}>
+                {p.key === "trading" ? "Our brands" : "Read more"} <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision 2030 -->
+  <section class="section ivory on-light vision">
+    <div class="wrap vision-grid">
+      <div class="vision-photo" data-reveal>
+        <div class="arch">
+          <img src="/images/photo/towers-760.webp" srcset="/images/photo/towers-760.webp 760w, /images/photo/towers-1400.webp 1400w" sizes="(max-width: 900px) 90vw, 460px" alt="Looking up at glass office towers against the sky" width="760" height="570" loading="lazy" />
+        </div>
+        <span class="arch-line"></span>
+      </div>
+      <div class="vision-copy" data-reveal style="--d:1">
+        <p class="eyebrow">Vision 2030</p>
+        <blockquote class="h-lg">
+          Above all, we believe in Vision 2030, and that real change is possible: <em>tomorrow doesn't have to be like today.</em>
+        </blockquote>
+        <p class="lede">
+          Solving social problems requires leaders from foundations, businesses, nonprofits, and governments to reimagine the
+          systems and relationships that shape our world. We strive for a deep understanding of how to create social change.
+        </p>
+        <a class="btn btn-ink" href="/contact/">Discover your potential <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services index -->
+  <section class="section dark services">
+    <div class="wrap">
+      <div class="services-head" data-reveal>
+        <div>
+          <p class="eyebrow">Services</p>
+          <h2 class="h-xl">Ten ways we open the <em>Gulf</em> to your business.</h2>
+        </div>
+        <a class="btn btn-ghost" href="/services/">All services <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <div class="svc-cols">
+        {
+          GROUPS.map((g) => (
+            <div data-reveal>
+              <p class="col-label">{g.label}</p>
+              <ol class="svc-list">
+                {servicesIn(g.key).map((s) => (
+                  <li>
+                    <a href={serviceUrl(s.slug)}>
+                      <span class="t">{s.menu}</span>
+                      <span class="go" aria-hidden="true">→</span>
+                      {s.image && (
+                        <img
+                          class="peek"
+                          src={`/images/services/${s.slug}-640.webp`}
+                          alt=""
+                          width="640"
+                          height="360"
+                          loading="lazy"
+                        />
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Our brands -->
+  <section class="section-tight paper on-light">
+    <div class="wrap brand-feature" data-reveal>
+      <div>
+        <p class="eyebrow">Our brands</p>
+        <h2 class="h-lg">Leadcrystal: <em>energy evolved.</em></h2>
+        <p class="lede">
+          A division of Bin Othaimeen Group powering progress with next-generation energy storage. Lead crystal batteries for
+          telecoms, renewables, security and industry across Saudi Arabia and the MENA region.
+        </p>
+        <div class="actions">
+          <a class="btn btn-ink" href="/leadcrystal/">About Leadcrystal <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="link-arrow" href="https://leadcrystal.co" rel="noopener">Visit leadcrystal.co <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <a class="lc-img" href="/leadcrystal/" tabindex="-1" aria-hidden="true">
+        <img src="/images/photo/leadcrystal-hero-1300.webp" alt="" width="1300" height="488" loading="lazy" />
+      </a>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section ivory on-light values">
+    <div class="wrap">
+      <div class="values-head" data-reveal>
+        <p class="eyebrow">Our core values</p>
+        <h2 class="h-xl">Eight points, <em>one compass.</em></h2>
+      </div>
+      <div class="values-grid">
+        <svg class="big-star" viewBox="0 0 200 200" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="0.6">
+            <rect x="50" y="50" width="100" height="100"></rect>
+            <rect x="50" y="50" width="100" height="100" transform="rotate(45 100 100)"></rect>
+            <circle cx="100" cy="100" r="30"></circle>
+            <circle cx="100" cy="100" r="92" stroke-dasharray="1 5"></circle>
+          </g>
+        </svg>
+        {
+          VALUES.map(([name, text], i) => (
+            <article class="value" data-reveal style={`--d:${i % 4}`}>
+              <div class="value-top">
+                <Star />
+                <span>0{i + 1}</span>
+              </div>
+              <h3>{name}</h3>
+              <p>{text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CEO -->
+  <section class="section dark ceo">
+    <div class="wrap narrow" data-reveal>
+      <Star class="star q" />
+      <blockquote>
+        <p>
+          Bin Othaimeen Group exemplifies excellence, turning visionary ideas into measurable successes for <em>every client, every project, every time.</em>
+        </p>
+        <footer>
+          <strong>{SITE.ceo.name}</strong>
+          <span>{SITE.ceo.title}</span>
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Partners -->
+  <section class="section-tight paper on-light">
+    <div class="wrap">
+      <div class="partners-head" data-reveal>
+        <p class="eyebrow">Partners</p>
+        <a class="link-arrow" href="/company-overview/our-partners/">All partners <span aria-hidden="true">→</span></a>
+      </div>
+      <ul class="logos" data-reveal>
+        {
+          PARTNERS.map((p) => (
+            <li>
+              <img src={`/images/partners/${p.logo}.webp`} alt={p.name} loading="lazy" height="80" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section class="section ivory on-light">
+    <div class="wrap">
+      <div class="services-head" data-reveal>
+        <div>
+          <p class="eyebrow">News &amp; insights</p>
+          <h2 class="h-lg">From the <em>desk.</em></h2>
+        </div>
+        <a class="link-arrow" href="/news/">All news <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="grid-2">
+        {posts.slice(0, 2).map((p, i) => <NewsCard post={p} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    min-height: min(100svh, 980px);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding-top: 120px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 80% 50%;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 55%;
+    background: radial-gradient(60% 80% at 75% 100%, rgba(226, 180, 92, 0.18), transparent 70%);
+    z-index: -1;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+    padding-bottom: 48px;
+  }
+  .hero-copy > * {
+    animation: rise 1s var(--ease) both;
+  }
+  .hero-copy > :nth-child(2) {
+    animation-delay: 0.08s;
+  }
+  .hero-copy > :nth-child(3) {
+    animation-delay: 0.18s;
+  }
+  .hero-copy > :nth-child(4) {
+    animation-delay: 0.28s;
+  }
+  .hero h1 {
+    max-width: 11ch;
+    margin-bottom: 0.4em;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 22px;
+    margin-top: 34px;
+  }
+  .hero-photo {
+    position: relative;
+    margin: 0 14px;
+    animation: rise 1.3s 0.2s var(--ease) both;
+  }
+  .hero-photo .arch {
+    aspect-ratio: 4 / 5.2;
+  }
+  .hero-photo img {
+    object-position: 66% 50%;
+  }
+  .coords {
+    position: absolute;
+    right: -10px;
+    bottom: -8px;
+    translate: 100% 0;
+    margin: 0;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    color: rgba(245, 241, 232, 0.55);
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+  }
+  .hero-foot {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line-dark);
+  }
+  .hero-foot a {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    padding: 22px 0 28px;
+    text-decoration: none;
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+    color: rgba(245, 241, 232, 0.88);
+    transition: color 0.2s;
+  }
+  .hero-foot a:hover {
+    color: var(--gold);
+  }
+  .hero-foot .n,
+  .pillar .n {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-copy > *,
+    .hero-photo {
+      animation: none;
+    }
+  }
+
+  /* Pillars */
+  .intro {
+    max-width: 760px;
+    margin-bottom: clamp(40px, 6vw, 72px);
+  }
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 4vw, 56px);
+  }
+  .pillar {
+    border-top: 1px solid var(--ink);
+    padding-top: 22px;
+  }
+  .pillar .n {
+    color: var(--gold-deep);
+  }
+  .pillar h3 {
+    font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+    margin: 14px 0 14px;
+    color: var(--indigo);
+  }
+  .pillar p {
+    color: var(--muted);
+    margin-bottom: 26px;
+  }
+
+  /* Vision */
+  .vision-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(48px, 7vw, 110px);
+    align-items: center;
+  }
+  .vision-photo {
+    position: relative;
+    margin: 14px;
+  }
+  .vision-photo .arch {
+    aspect-ratio: 4 / 5;
+  }
+  .vision-photo .arch-line {
+    border-color: rgba(154, 106, 30, 0.45);
+  }
+  blockquote {
+    margin: 0 0 0.8em;
+    color: var(--indigo);
+  }
+
+  /* Services list */
+  .services-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    margin-bottom: clamp(36px, 5vw, 64px);
+  }
+  .services-head h2 {
+    max-width: 16ch;
+    margin: 0;
+  }
+  .svc-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 80px);
+  }
+  .col-label {
+    font-size: 0.74rem;
+    font-weight: 650;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .svc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: svc;
+  }
+  .svc-list li {
+    counter-increment: svc;
+  }
+  .svc-list a {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line-dark);
+    text-decoration: none;
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+    line-height: 1.15;
+    transition:
+      color 0.25s,
+      padding 0.35s var(--ease);
+  }
+  .svc-list a::before {
+    content: counter(svc, decimal-leading-zero);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: rgba(245, 241, 232, 0.45);
+  }
+  .svc-list a:hover {
+    color: var(--gold);
+    padding-left: 10px;
+  }
+  .go {
+    font-family: var(--sans);
+    font-size: 1rem;
+    opacity: 0.5;
+    transition:
+      opacity 0.25s,
+      transform 0.35s var(--ease);
+  }
+  .svc-list a:hover .go {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+  .peek {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    width: 200px;
+    height: 128px;
+    object-fit: cover;
+    border-radius: 999px 999px 4px 4px / 50% 50% 4px 4px;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.92) rotate(-3deg);
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.45s var(--ease);
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+  }
+  .svc-list a:hover .peek {
+    opacity: 1;
+    transform: translateY(-50%) scale(1) rotate(0);
+  }
+  @media (hover: none), (max-width: 900px) {
+    .peek {
+      display: none;
+    }
+  }
+
+  /* Brand feature */
+  .brand-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(36px, 5vw, 72px);
+    align-items: center;
+  }
+  .lc-img {
+    display: block;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 40px 80px -40px rgba(12, 4, 55, 0.6);
+  }
+  .lc-img img {
+    transition: transform 0.8s var(--ease);
+  }
+  .lc-img:hover img {
+    transform: scale(1.03);
+  }
+
+  /* Values */
+  .values-head {
+    text-align: center;
+    margin: 0 auto clamp(40px, 6vw, 72px);
+  }
+  .values-head .eyebrow {
+    justify-content: center;
+  }
+  .values-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    isolation: isolate;
+  }
+  .big-star {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(560px, 80%);
+    translate: -50% -50%;
+    color: var(--gold-deep);
+    opacity: 0.22;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .value {
+    background: color-mix(in srgb, var(--ivory) 88%, transparent);
+    padding: 28px 26px 32px;
+    transition: background 0.3s var(--ease);
+  }
+  .value:hover {
+    background: var(--paper);
+  }
+  .value-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 26px;
+  }
+  .value-top :global(.star) {
+    color: var(--gold-deep);
+  }
+  .value-top span {
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .value h3 {
+    font-size: 1.7rem;
+    color: var(--indigo);
+    margin-bottom: 0.35em;
+  }
+  .value p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  /* CEO */
+  .ceo {
+    text-align: center;
+  }
+  .ceo .q {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 28px;
+  }
+  .ceo blockquote {
+    color: var(--ivory);
+  }
+  .ceo blockquote p {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 3.6vw, 3rem);
+    line-height: 1.14;
+  }
+  .ceo footer {
+    display: grid;
+    gap: 4px;
+    margin-top: 28px;
+  }
+  .ceo footer strong {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .ceo footer span {
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* Partners */
+  .partners-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .partners-head .eyebrow {
+    margin: 0;
+  }
+  .logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .logos li {
+    display: grid;
+    place-items: center;
+    padding: 26px 18px;
+    min-height: 120px;
+  }
+  .logos li + li {
+    border-left: 1px solid var(--line);
+  }
+  .logos img {
+    max-height: 54px;
+    width: auto;
+    mix-blend-mode: multiply;
+    filter: grayscale(1) contrast(1.1);
+    opacity: 0.72;
+    transition:
+      filter 0.3s,
+      opacity 0.3s;
+  }
+  .logos li:hover img {
+    filter: none;
+    opacity: 1;
+  }
+
+  @media (max-width: 1080px) {
+    .values-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .logos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .logos li:nth-child(5) {
+      border-left: 0;
+    }
+    .logos li:nth-child(n + 5) {
+      border-top: 1px solid var(--line);
+    }
+  }
+  @media (max-width: 900px) {
+    .hero-grid,
+    .vision-grid,
+    .brand-feature,
+    .svc-cols,
+    .pillars {
+      grid-template-columns: 1fr;
+    }
+    .hero-photo {
+      max-width: 340px;
+      justify-self: center;
+      margin: 0 40px 0 14px;
+    }
+    .vision-photo {
+      max-width: 380px;
+    }
+    .services-head {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+  @media (max-width: 640px) {
+    .hero {
+      padding-top: 104px;
+    }
+    .hero-foot {
+      grid-template-columns: 1fr;
+    }
+    .hero-foot a {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .hero-foot a:last-child {
+      border-bottom: 0;
+    }
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+    .logos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .logos li {
+      border-left: 0 !important;
+      border-top: 1px solid var(--line);
+    }
+    .logos li:nth-child(even) {
+      border-left: 1px solid var(--line) !important;
+    }
+    .logos li:nth-child(-n + 2) {
+      border-top: 0;
+    }
+  }
+</style>

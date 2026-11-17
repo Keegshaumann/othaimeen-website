@@ -1,0 +1,15 @@
+---
+// Eight-point star (khatam): two squares, one turned 45 degrees.
+interface Props {
+  class?: string;
+  filled?: boolean;
+}
+const { class: cls = "star", filled = false } = Astro.props;
+---
+
+<svg class={cls} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <g fill={filled ? "currentColor" : "none"} stroke="currentColor" stroke-width="1.2" stroke-linejoin="miter">
+    <rect x="5" y="5" width="14" height="14"></rect>
+    <rect x="5" y="5" width="14" height="14" transform="rotate(45 12 12)"></rect>
+  </g>
+</svg>

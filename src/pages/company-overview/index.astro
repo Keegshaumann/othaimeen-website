@@ -1,0 +1,210 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Star from "../../components/Star.astro";
+import { SITE } from "../../site";
+
+const mission = [
+  ["Unwavering Professionalism", "Upholding the highest standards of excellence in every endeavor, ensuring unparalleled service quality."],
+  ["Uncompromised Integrity", "Conducting business with unwavering ethics, fostering trust with clients, partners, and stakeholders."],
+  ["Honesty in Execution", "Maintaining transparency in every action, ensuring that our clients are always informed and empowered."],
+  ["Innovative Strategies", "Continuously seeking the latest and most effective strategies to ensure our clients stay ahead in a rapidly evolving market."],
+  ["Deep Regional Expertise", "Leveraging our profound understanding of the GCC's intricacies to offer uniquely tailored solutions."],
+  ["Catalysts for Growth", "Committed to driving sustainable growth for our clients, translating their aspirations into tangible success stories."],
+];
+---
+
+<Base
+  title="Company Overview"
+  description="Bin Othaimeen Group is a Riyadh-based business services and holding company: GCC market entry, sector advisory, digital marketing and trading, built on integrity, transparency and measurable results."
+>
+  <PageHero
+    eyebrow="About us"
+    title="An emblem of dedication, expertise and <em>excellence.</em>"
+    image="/images/photo/kingdom-portrait-800.webp"
+    imageAlt="The Kingdom Centre tower in Riyadh at night"
+    crumbs={[{ label: "About" }, { label: "Company overview" }]}
+  />
+
+  <section class="section paper on-light">
+    <div class="wrap layout">
+      <div class="prose" data-reveal>
+        <p class="big">
+          At the heart of the GCC's bustling business landscape stands Bin Othaimeen Group, an emblem of dedication, expertise, and
+          unwavering commitment to excellence.
+        </p>
+        <p>
+          Founded on the pillars of integrity, transparency, and measurable results, we've charted an impressive trajectory,
+          establishing ourselves as the definitive partner for businesses aiming to thrive in the region. With each endeavor, we bring
+          to the table a confluence of regional knowledge, strategic acumen, and a genuine passion for seeing our clients succeed.
+        </p>
+        <p>
+          Our suite of services, ranging from <a href="/service/market-entry/">GCC Market Entry</a> to cutting-edge
+          <a href="/service/digital-marketing/">Digital Marketing</a> solutions, is crafted meticulously, keeping in mind the diverse and
+          ever-evolving needs of the businesses we serve. Whether it's unlocking the potential of the
+          <a href="/service/food-beverage/">Food &amp; Beverage</a> sector, capitalizing on
+          <a href="/service/sports-wellness/">Sports &amp; Wellness</a> opportunities, or navigating the intricacies of the
+          <a href="/service/hospitality-entertainment/">Hospitality &amp; Entertainment</a> industry, we remain at the forefront,
+          guiding visions to tangible outcomes. Our dedication to measurable results isn't just a promise; it's an ethos that
+          permeates every project, every strategy, and every partnership.
+        </p>
+        <p>
+          But beyond our impressive portfolio of services lies our true strength: our people. A team of seasoned professionals,
+          cultural experts, and industry visionaries, united by a singular goal: ensuring our clients don't just navigate the GCC's
+          vibrant markets, but lead, innovate, and redefine standards. Our team's deep-rooted understanding of the region's cultural
+          nuances, business etiquettes, and market dynamics positions our clients advantageously, setting them on a trajectory of
+          sustainable growth and unparalleled success.
+        </p>
+        <p>
+          At Bin Othaimeen Group, we don't just offer services; we forge partnerships, nurture dreams, and craft legacies. Our journey
+          in the GCC is punctuated with countless success stories, and as we look to the horizon, we see infinite possibilities, fresh
+          challenges, and new milestones waiting to be conquered. Partner with us, and let's script the next chapter of your success
+          story in the heart of the GCC.
+        </p>
+      </div>
+      <aside class="side" data-reveal style="--d:1">
+        <figure class="pull dark">
+          <Star />
+          <blockquote>
+            Unlock unparalleled success in the GCC with Bin Othaimeen, where passion meets precision, transforming your business
+            vision into a thriving regional reality.
+          </blockquote>
+        </figure>
+        <figure class="quote">
+          <blockquote>
+            "Bin Othaimeen Group exemplifies excellence, turning visionary ideas into measurable successes for every client, every
+            project, every time."
+          </blockquote>
+          <figcaption><strong>{SITE.ceo.name}</strong><span>{SITE.ceo.title}</span></figcaption>
+        </figure>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section ivory on-light">
+    <div class="wrap">
+      <div class="mhead" data-reveal>
+        <p class="eyebrow">Our mission</p>
+        <h2 class="h-xl">Our focused mission at <em>Bin Othaimeen Group.</em></h2>
+        <p class="lede">
+          Integrating our rich legacy with future-forward strategies, we're committed to revolutionizing the GCC business landscape.
+        </p>
+      </div>
+      <div class="grid-3">
+        {
+          mission.map(([t, d], i) => (
+            <article class="card" data-reveal style={`--d:${i % 3}`}>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight paper on-light">
+    <div class="wrap links">
+      <a href="/company-overview/our-partners/" data-reveal>
+        <span class="eyebrow">Partners</span>
+        <span class="t">The companies we work alongside <span aria-hidden="true">→</span></span>
+      </a>
+      <a href="/company-overview/careers/" data-reveal style="--d:1">
+        <span class="eyebrow">Careers</span>
+        <span class="t">Build your career with us <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .big {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+    line-height: 1.16;
+    color: var(--indigo) !important;
+  }
+  .side {
+    position: sticky;
+    top: 104px;
+    display: grid;
+    gap: 28px;
+  }
+  figure {
+    margin: 0;
+  }
+  .pull {
+    padding: 32px 30px;
+    border-radius: var(--radius);
+  }
+  .pull blockquote {
+    margin: 18px 0 0;
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    line-height: 1.2;
+  }
+  .quote {
+    border-left: 2px solid var(--gold);
+    padding-left: 22px;
+  }
+  .quote blockquote {
+    margin: 0 0 14px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.3;
+    color: var(--indigo);
+  }
+  figcaption {
+    display: grid;
+    font-size: 0.9rem;
+  }
+  figcaption span {
+    color: var(--muted);
+  }
+  .mhead {
+    max-width: 760px;
+    margin-bottom: clamp(36px, 5vw, 64px);
+  }
+  .card h3 {
+    color: var(--indigo);
+  }
+  .links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .links a {
+    display: grid;
+    padding: 32px 0;
+    border-top: 1px solid var(--ink);
+    text-decoration: none;
+  }
+  .links .t {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+    color: var(--indigo);
+    transition: color 0.2s;
+  }
+  .links a:hover .t {
+    color: var(--gold-deep);
+  }
+  @media (max-width: 900px) {
+    .layout,
+    .links {
+      grid-template-columns: 1fr;
+    }
+    .side {
+      position: static;
+    }
+  }
+</style>

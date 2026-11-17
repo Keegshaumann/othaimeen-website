@@ -1,0 +1,236 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Star from "../components/Star.astro";
+
+const benefits = [
+  {
+    title: "Unmatched reliability & safety",
+    items: [
+      ["Zero maintenance", "The solidified electrolyte never requires watering or equalization charges, eliminating maintenance costs and risks."],
+      ["Exceptional safety", "Non-spillable, sealed construction. Significantly lower risk of leakage, thermal runaway, or emission of hazardous gases compared to other technologies."],
+      ["Deep discharge resilience", "Withstands deep discharges significantly better than traditional batteries, recovering fully without the permanent damage that cripples other types."],
+    ],
+  },
+  {
+    title: "Built for the region's environment",
+    items: [
+      ["High-temperature performance", "Superior tolerance to the extreme heat prevalent in the region. Experiences far less capacity loss and degradation at high temperatures compared to standard batteries."],
+      ["Longer service life", "Offers a dramatically extended operational lifespan (often 2-3 times longer than conventional lead-acid under similar conditions), providing greater value over time."],
+    ],
+  },
+  {
+    title: "Operational efficiency & cost-effectiveness",
+    items: [
+      ["Lower total cost of ownership", "While the initial investment may be higher, the combination of a much longer lifespan, zero maintenance, and higher energy efficiency results in a substantially lower cost per cycle and per year of service."],
+      ["High charge acceptance", "Charges faster and more efficiently, saving on energy costs and generator runtime, which is critical for backup and renewable energy applications."],
+      ["Long shelf life", "Can be stored for extended periods with minimal charge loss, ensuring reliability even from standby."],
+    ],
+  },
+  {
+    title: "Versatility & sustainability",
+    items: [
+      ["Telecommunications & IT", "UPS systems for towers and data centers."],
+      ["Renewable energy", "Storage for solar (PV) and wind installations."],
+      ["Security & infrastructure", "Backup for traffic systems, security networks, and remote monitoring."],
+      ["Utility & industrial", "Grid support, emergency lighting, and general backup power."],
+      ["Eco-friendly", "Fully recyclable at end of life, supporting corporate and national sustainability goals."],
+    ],
+  },
+];
+---
+
+<Base
+  title="Leadcrystal: Lead Crystal Battery Technology in Saudi Arabia"
+  description="Leadcrystal is a division of Bin Othaimeen Group supplying lead crystal batteries for telecoms, renewable energy, security and industry across Saudi Arabia and MENA."
+  image="/images/photo/leadcrystal-hero-1300.webp"
+>
+  <PageHero
+    eyebrow="Our brands"
+    title="Leadcrystal. <em>Energy evolved.</em>"
+    lede="A division of Bin Othaimeen Group powering progress with next-generation energy storage."
+    crumbs={[{ label: "Our brands" }, { label: "Leadcrystal" }]}
+  >
+    <div class="hero-actions">
+      <a class="btn" href="https://leadcrystal.co" rel="noopener">Visit leadcrystal.co <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </PageHero>
+
+  <section class="banner-wrap dark">
+    <div class="wrap">
+      <img class="banner" src="/images/photo/leadcrystal-hero-1300.webp" alt="Leadcrystal: Energy Evolved. Lead crystal energy solutions with solar panels and battery units" width="1300" height="488" />
+    </div>
+  </section>
+
+  <section class="section paper on-light">
+    <div class="wrap grid-2 about">
+      <div class="prose" data-reveal>
+        <p class="big">
+          Leadcrystal is a dynamic new force in the energy storage sector, proudly established as a division of the esteemed Bin
+          Othaimeen Group, a premier business services and holding company with a legacy of excellence in Saudi Arabia.
+        </p>
+        <p>
+          Based in the Kingdom of Saudi Arabia, our mission is to revolutionize energy reliability and efficiency across the region.
+          We achieve this by supplying, supporting, and promoting world-class Lead Crystal battery technology: a breakthrough
+          innovation that sets a new standard for performance, safety, and sustainability in stationary energy storage.
+        </p>
+        <p>
+          Operating from our strategic hub in the Kingdom, we are dedicated to serving the critical energy storage needs of Saudi
+          Arabia and the broader MENA region, supporting national visions for a diversified, sustainable, and technologically
+          advanced future.
+        </p>
+      </div>
+      <div data-reveal style="--d:1">
+        <div class="panel">
+          <p class="eyebrow">Purpose</p>
+          <h2 class="h-md">A foundation of reliability</h2>
+          <p>
+            In a region defined by ambitious growth, digital transformation, and climatic extremes, a dependable power source is not
+            a luxury: it is an absolute necessity. Interruptions in energy supply can halt progress, disrupt services, and incur
+            significant costs.
+          </p>
+          <p>
+            Leadcrystal exists to <strong>eliminate power uncertainty</strong>. We provide businesses, infrastructure projects, and
+            communities with an energy storage solution so robust and reliable that it becomes the invisible, unwavering foundation
+            upon which progress is built. We are not just selling batteries; we are delivering <strong>peace of mind and operational continuity</strong>.
+          </p>
+        </div>
+        <div class="panel tech">
+          <p class="eyebrow">The Leadcrystal advantage</p>
+          <h2 class="h-md">A breakthrough in battery technology</h2>
+          <p>
+            While the name includes "lead," Lead Crystal technology represents a fundamental evolution from traditional lead-acid or
+            even AGM batteries. It is a distinct, patented class of battery that uses a silica-based electrolyte which solidifies into
+            a stable, crystalline gel. This simple yet profound difference unlocks a suite of benefits that make it the ideal choice
+            for the demanding conditions of our region.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ivory on-light">
+    <div class="wrap">
+      <div class="bhead" data-reveal>
+        <p class="eyebrow">Key benefits</p>
+        <h2 class="h-xl">Why it's the superior choice for <em>Saudi Arabia &amp; MENA.</em></h2>
+      </div>
+      <div class="benefits">
+        {
+          benefits.map((b, i) => (
+            <div class="bgroup" data-reveal style={`--d:${i % 2}`}>
+              <p class="bnum">0{i + 1}</p>
+              <h3>{b.title}</h3>
+              <ul>
+                {b.items.map(([t, d]) => (
+                  <li>
+                    <Star />
+                    <span>
+                      <strong>{t}.</strong> {d}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <div class="center" data-reveal>
+        <a class="btn btn-ink" href="https://leadcrystal.co" rel="noopener">Visit leadcrystal.co <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Powering a project in the <em>Kingdom?</em>" text="Talk to us about lead crystal energy storage for telecoms, solar, security and industrial sites." />
+</Base>
+
+<style>
+  .hero-actions {
+    margin-top: 30px;
+  }
+  .banner-wrap {
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+  .banner {
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.7);
+  }
+  .about {
+    align-items: start;
+  }
+  .big {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+    line-height: 1.2;
+    color: var(--indigo) !important;
+  }
+  .panel {
+    border-top: 1px solid var(--ink);
+    padding-top: 22px;
+    margin-bottom: 40px;
+  }
+  .panel h2 {
+    color: var(--indigo);
+  }
+  .panel p:not(.eyebrow) {
+    color: #2e2945;
+  }
+  .bhead {
+    max-width: 820px;
+    margin-bottom: clamp(36px, 5vw, 64px);
+  }
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(28px, 4vw, 56px);
+  }
+  .bgroup {
+    background: var(--paper);
+    padding: clamp(24px, 3vw, 40px);
+    border-radius: var(--radius);
+  }
+  .bnum {
+    font-size: 0.74rem;
+    font-weight: 650;
+    letter-spacing: 0.2em;
+    color: var(--gold-deep);
+    margin: 0;
+  }
+  .bgroup h3 {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+    color: var(--indigo);
+    margin: 10px 0 18px;
+  }
+  .bgroup ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .bgroup li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
+    color: #2e2945;
+    font-size: 0.97rem;
+  }
+  .bgroup li :global(.star) {
+    color: var(--gold-deep);
+    margin-top: 2px;
+  }
+  .bgroup strong {
+    color: var(--indigo);
+  }
+  .center {
+    text-align: center;
+    margin-top: 56px;
+  }
+  @media (max-width: 900px) {
+    .benefits {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

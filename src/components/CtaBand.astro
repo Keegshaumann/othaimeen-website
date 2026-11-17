@@ -1,0 +1,60 @@
+---
+import Star from "./Star.astro";
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = "Looking for a first-class <em>regional partner?</em>",
+  text = "Ready to elevate your business in the GCC? Reach out and let's craft success together.",
+} = Astro.props;
+---
+
+<section class="cta indigo">
+  <div class="wrap row">
+    <Star class="star big" />
+    <div>
+      <h2 class="h-lg" set:html={title} />
+      <p class="lede">{text}</p>
+    </div>
+    <a class="btn" href="/contact/">Get in touch <span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding: clamp(56px, 7vw, 96px) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 36px;
+    align-items: center;
+  }
+  h2 {
+    margin-bottom: 0.25em;
+  }
+  .lede {
+    margin: 0;
+  }
+  .big {
+    width: 72px;
+    height: 72px;
+    opacity: 0.9;
+  }
+  @media (max-width: 800px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .big {
+      width: 48px;
+      height: 48px;
+    }
+    .btn {
+      justify-self: start;
+    }
+  }
+</style>

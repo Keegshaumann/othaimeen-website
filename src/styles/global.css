@@ -1,0 +1,523 @@
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource-variable/hanken-grotesk/wght.css";
+
+/* Bin Othaimeen Group: Riyadh at dusk. Night indigo from the 2026 logo, ivory paper,
+   and the gold of late sun on the Faisaliah tower as the single accent. */
+:root {
+  --night: #0c0437;
+  --night-2: #140a48;
+  --indigo: #1d005c;
+  --indigo-2: #2d167a;
+  --lilac: #b7aef0;
+  --gold: #e2b45c;
+  --gold-soft: #f0d39a;
+  --gold-deep: #9a6a1e;
+  --ivory: #f5f1e8;
+  --paper: #fbf9f4;
+  --ink: #17122f;
+  --muted: #5f5a76;
+  --line: rgba(23, 18, 47, 0.12);
+  --line-dark: rgba(245, 241, 232, 0.14);
+
+  --serif: "Instrument Serif", "Iowan Old Style", "Times New Roman", serif;
+  --sans: "Hanken Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
+
+  --wrap: 1240px;
+  --gutter: clamp(20px, 4vw, 48px);
+  --radius: 4px;
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+
+  /* Eight-point star (Najdi khatam), used as a quiet texture on dark panels */
+  --star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23e2b45c' stroke-opacity='.10' stroke-width='1'%3E%3Crect x='30' y='30' width='36' height='36'/%3E%3Crect x='30' y='30' width='36' height='36' transform='rotate(45 48 48)'/%3E%3Cpath d='M0 48h12M84 48h12M48 0v12M48 84v12'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  color: inherit;
+}
+p {
+  margin: 0 0 1.1em;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h1 em,
+h2 em,
+h3 em,
+.display em {
+  font-style: italic;
+  color: var(--gold);
+}
+.on-light h1 em,
+.on-light h2 em,
+.on-light h3 em {
+  color: var(--gold-deep);
+}
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+::selection {
+  background: var(--gold-soft);
+  color: var(--ink);
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--gold);
+  color: var(--night);
+  padding: 10px 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--wrap) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.narrow {
+  max-width: calc(780px + var(--gutter) * 2);
+}
+.section {
+  padding: clamp(72px, 10vw, 140px) 0;
+}
+.section-tight {
+  padding: clamp(56px, 7vw, 96px) 0;
+}
+
+/* Surfaces */
+.dark {
+  background: var(--night);
+  color: var(--ivory);
+  position: relative;
+  isolation: isolate;
+}
+.dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--star);
+  background-size: 96px 96px;
+  mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, #000 0%, transparent 75%);
+  z-index: -1;
+  pointer-events: none;
+}
+.ivory {
+  background: var(--ivory);
+}
+.paper {
+  background: var(--paper);
+}
+.indigo {
+  background: var(--indigo);
+  color: var(--ivory);
+}
+
+/* Type helpers */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 650;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+.dark .eyebrow,
+.indigo .eyebrow {
+  color: var(--gold);
+}
+.display,
+.h-xl,
+.h-lg,
+.h-md {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.012em;
+}
+.display em,
+.h-xl em,
+.h-lg em,
+.h-md em {
+  font-style: italic;
+  color: var(--gold);
+}
+.on-light .h-xl em,
+.on-light .h-lg em,
+.on-light .h-md em {
+  color: var(--gold-deep);
+}
+.display {
+  font-size: clamp(2.9rem, 7.4vw, 6.6rem);
+  line-height: 0.96;
+}
+.h-xl {
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+}
+.h-lg {
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+}
+.h-md {
+  font-size: clamp(1.55rem, 2.4vw, 2.1rem);
+}
+.lede {
+  font-size: clamp(1.08rem, 1.5vw, 1.28rem);
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 62ch;
+}
+.dark .lede,
+.indigo .lede {
+  color: rgba(245, 241, 232, 0.76);
+}
+.muted {
+  color: var(--muted);
+}
+.dark .muted {
+  color: rgba(245, 241, 232, 0.66);
+}
+.prose {
+  max-width: 68ch;
+}
+.prose p,
+.prose li {
+  color: #2e2945;
+}
+.prose h2,
+.prose h3 {
+  margin-top: 1.6em;
+}
+.prose h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+.prose h3 {
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.2em;
+  margin: 0 0 1.2em;
+}
+.prose li {
+  margin-bottom: 0.5em;
+}
+.prose li::marker {
+  color: var(--gold-deep);
+}
+.prose a {
+  color: var(--indigo-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Buttons */
+.btn {
+  --bg: var(--gold);
+  --fg: var(--night);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 26px;
+  border: 1px solid var(--bg);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 600 0.84rem/1 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.btn .arrow {
+  transition: transform 0.3s var(--ease);
+}
+.btn:hover {
+  --bg: var(--gold-soft);
+}
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+.btn-ghost {
+  --bg: transparent;
+  --fg: var(--ivory);
+  border-color: rgba(245, 241, 232, 0.4);
+}
+.btn-ghost:hover {
+  --bg: rgba(245, 241, 232, 0.08);
+  border-color: var(--ivory);
+}
+.btn-ink {
+  --bg: var(--indigo);
+  --fg: var(--ivory);
+}
+.btn-ink:hover {
+  --bg: var(--indigo-2);
+}
+.btn-line {
+  --bg: transparent;
+  --fg: var(--ink);
+  border-color: var(--line);
+}
+.btn-line:hover {
+  --bg: var(--ink);
+  --fg: var(--ivory);
+  border-color: var(--ink);
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--indigo-2);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+}
+.dark .link-arrow {
+  color: var(--gold);
+}
+.link-arrow span {
+  transition: transform 0.3s var(--ease);
+}
+.link-arrow:hover span {
+  transform: translateX(4px);
+}
+
+/* Arch frame: the Najdi arch, echoing the Kingdom Centre's parabolic opening */
+.arch {
+  border-radius: 999px 999px 6px 6px / 46% 46% 6px 6px;
+  overflow: hidden;
+  position: relative;
+}
+.arch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.arch-line {
+  position: absolute;
+  inset: -14px;
+  border: 1px solid rgba(226, 180, 92, 0.5);
+  border-radius: 999px 999px 10px 10px / 46% 46% 10px 10px;
+  pointer-events: none;
+}
+
+/* Small eight-point star glyph */
+.star {
+  width: 22px;
+  height: 22px;
+  color: var(--gold);
+  flex: none;
+}
+
+/* Grids */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 5vw, 80px);
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 40px);
+}
+@media (max-width: 900px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cards used by services, values and articles */
+.card {
+  border-top: 1px solid var(--line);
+  padding-top: 26px;
+}
+.dark .card {
+  border-color: var(--line-dark);
+}
+.card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.4em;
+}
+.card p {
+  color: var(--muted);
+  margin: 0;
+}
+.dark .card p {
+  color: rgba(245, 241, 232, 0.7);
+}
+
+/* Reveal on scroll (only when JS is running) */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: calc(var(--d, 0) * 90ms);
+}
+.js [data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Forms */
+.field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.field label,
+.field .label {
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.field input,
+.field select,
+.field textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  width: 100%;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.field textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--indigo-2);
+  box-shadow: 0 0 0 3px rgba(45, 22, 122, 0.14);
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+@media (max-width: 640px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
+.hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.form-status {
+  margin: 16px 0 0;
+  min-height: 1.6em;
+  font-weight: 500;
+}
+.form-status[data-state="ok"] {
+  color: #1d6b45;
+}
+.form-status[data-state="error"] {
+  color: #a3262a;
+}
+.notice {
+  background: #e7f3ec;
+  border-left: 3px solid #1d6b45;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,123 @@
+---
+// Dark page header used by every inner page: breadcrumb, serif title, optional lede and arch photo.
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  image?: string;
+  imageAlt?: string;
+  crumbs?: Crumb[];
+}
+const { eyebrow, title, lede, image, imageAlt = "", crumbs = [] } = Astro.props;
+---
+
+<section class:list={["page-hero dark", { "has-image": image }]}>
+  <div class="wrap inner">
+    <div class="copy">
+      {
+        crumbs.length > 0 && (
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            {crumbs.map((c) => (
+              <>
+                <span aria-hidden="true">/</span>
+                {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+              </>
+            ))}
+          </nav>
+        )
+      }
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1 class="h-xl" set:html={title} />
+      {lede && <p class="lede">{lede}</p>}
+      <slot />
+    </div>
+    {
+      image && (
+        <div class="photo">
+          <div class="arch">
+            <img src={image} alt={imageAlt} width="640" height="760" fetchpriority="high" />
+          </div>
+          <span class="arch-line" />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding: clamp(150px, 16vw, 200px) 0 clamp(64px, 8vw, 110px);
+    overflow: hidden;
+  }
+  .page-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -10% -40% 30%;
+    height: 80%;
+    background: radial-gradient(closest-side, rgba(226, 180, 92, 0.16), transparent);
+    z-index: -1;
+  }
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    align-items: end;
+  }
+  .has-image .inner {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.8fr);
+  }
+  .copy {
+    animation: rise 1s var(--ease) both;
+  }
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: rgba(245, 241, 232, 0.55);
+    margin-bottom: 34px;
+  }
+  .crumbs a {
+    text-decoration: none;
+    color: rgba(245, 241, 232, 0.72);
+  }
+  .crumbs a:hover {
+    color: var(--gold);
+  }
+  h1 {
+    max-width: 16ch;
+  }
+  .photo {
+    position: relative;
+    margin: 0 14px;
+    animation: rise 1.2s 0.15s var(--ease) both;
+  }
+  .photo .arch {
+    aspect-ratio: 4 / 4.6;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .copy,
+    .photo {
+      animation: none;
+    }
+  }
+  @media (max-width: 900px) {
+    .has-image .inner {
+      grid-template-columns: 1fr;
+    }
+    .photo {
+      max-width: 360px;
+    }
+  }
+</style>

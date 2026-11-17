@@ -1,0 +1,83 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { PARTNERS } from "../../site";
+---
+
+<Base
+  title="Our Partners"
+  description="The companies Bin Othaimeen Group works alongside in Saudi Arabia and the GCC, from Lead Crystal Technologies to NP Digital."
+>
+  <PageHero
+    eyebrow="Partners"
+    title="Strength in <em>partnership.</em>"
+    lede="Our strategic partnerships with leading regional and global companies let us bring their expertise and industry insight to every client we serve."
+    crumbs={[{ label: "About", href: "/company-overview/" }, { label: "Partners" }]}
+  />
+
+  <section class="section paper on-light">
+    <div class="wrap">
+      <ul class="partners">
+        {
+          PARTNERS.map((p, i) => (
+            <li data-reveal style={`--d:${i % 3}`}>
+              <div class="logo">
+                <img src={`/images/partners/${p.logo}.webp`} alt={`${p.name} logo`} loading="lazy" height="80" />
+              </div>
+              <h2>{p.name}</h2>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .partners {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  li {
+    background: var(--paper);
+    padding: 36px 32px 30px;
+    display: grid;
+    gap: 18px;
+  }
+  .logo {
+    height: 120px;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    border-radius: var(--radius);
+  }
+  .logo img {
+    max-height: 70px;
+    max-width: 78%;
+    width: auto;
+  }
+  h2 {
+    font-size: 1.5rem;
+    color: var(--indigo);
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .partners {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .partners {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

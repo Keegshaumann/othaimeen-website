@@ -1,0 +1,412 @@
+---
+import { NAV } from "../site";
+const path = Astro.url.pathname;
+const active = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+const sectionActive = (item: (typeof NAV)[number]) =>
+  active(item.href) ||
+  (item.label === "Services" && path.startsWith("/service/")) ||
+  ("links" in item && item.links?.some((l) => active(l.href)));
+---
+
+<header class="site-header" data-header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Bin Othaimeen Group, home">
+      <img src="/images/brand/logo-white.png" alt="Bin Othaimeen Group" width="225" height="106" />
+    </a>
+
+    <nav class="primary" aria-label="Main">
+      <ul>
+        {
+          NAV.map((item) => (
+            <li class={"groups" in item ? "has-mega" : "links" in item ? "has-menu" : ""}>
+              <a href={item.href} class:list={{ on: sectionActive(item) }} aria-current={active(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+              {"groups" in item && item.groups && (
+                <div class="mega">
+                  <div class="mega-inner">
+                    {item.groups.map((g) => (
+                      <div>
+                        <p class="mega-title">{g.label}</p>
+                        <ul>
+                          {g.links.map((l) => (
+                            <li>
+                              <a href={l.href} aria-current={path === l.href ? "page" : undefined}>
+                                {l.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                    <a class="mega-card" href="/services/">
+                      <img src="/images/photo/riyadh-skyline-640.webp" alt="" width="640" height="334" loading="lazy" />
+                      <span>All services <span aria-hidden="true">→</span></span>
+                    </a>
+                  </div>
+                </div>
+              )}
+              {"links" in item && item.links && (
+                <ul class="menu">
+                  {item.links.map((l) => (
+                    <li>
+                      <a href={l.href} aria-current={path === l.href ? "page" : undefined}>
+                        {l.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="btn header-cta" href="/contact/">Contact</a>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" data-burger>
+      <span class="visually-hidden">Menu</span>
+      <span class="lines" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </div>
+
+  <div class="drawer" id="drawer" data-drawer hidden>
+    <nav class="wrap" aria-label="Mobile">
+      {
+        NAV.map((item) =>
+          "groups" in item || "links" in item ? (
+            <details>
+              <summary>{item.label}</summary>
+              <ul>
+                {"groups" in item &&
+                  item.groups?.map((g) => (
+                    <>
+                      <li class="drawer-group">{g.label}</li>
+                      {g.links.map((l) => (
+                        <li>
+                          <a href={l.href}>{l.label}</a>
+                        </li>
+                      ))}
+                    </>
+                  ))}
+                {"groups" in item && (
+                  <li>
+                    <a href={item.href}>All services</a>
+                  </li>
+                )}
+                {"links" in item &&
+                  item.links?.map((l) => (
+                    <li>
+                      <a href={l.href}>{l.label}</a>
+                    </li>
+                  ))}
+              </ul>
+            </details>
+          ) : (
+            <a class="drawer-link" href={item.href}>
+              {item.label}
+            </a>
+          ),
+        )
+      }
+      <a class="drawer-link" href="/contact/">Contact</a>
+      <a class="btn" href="/contact/">Get in touch <span class="arrow" aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    color: var(--ivory);
+    transition:
+      background 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+  .site-header.scrolled,
+  .site-header.open {
+    background: rgba(12, 4, 55, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line-dark);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    height: 92px;
+    transition: height 0.4s var(--ease);
+  }
+  .scrolled .bar {
+    height: 74px;
+  }
+  .brand img {
+    height: 56px;
+    width: auto;
+    transition: height 0.4s var(--ease);
+  }
+  .scrolled .brand img {
+    height: 46px;
+  }
+  .primary {
+    margin-left: auto;
+  }
+  .primary > ul {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .primary > ul > li {
+    position: relative;
+  }
+  .primary > ul > li > a {
+    display: block;
+    padding: 12px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(245, 241, 232, 0.86);
+    transition: color 0.2s;
+  }
+  .primary > ul > li > a:hover,
+  .primary > ul > li > a.on {
+    color: var(--gold);
+  }
+  .has-menu > a::after,
+  .has-mega > a::after {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-left: 8px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-3px) rotate(45deg);
+    opacity: 0.7;
+  }
+  .menu,
+  .mega {
+    position: absolute;
+    top: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition:
+      opacity 0.25s var(--ease),
+      transform 0.25s var(--ease),
+      visibility 0.25s;
+  }
+  .has-menu:hover .menu,
+  .has-menu:focus-within .menu,
+  .has-mega:hover .mega,
+  .has-mega:focus-within .mega {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .menu {
+    left: 0;
+    min-width: 230px;
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: var(--radius);
+    box-shadow: 0 24px 60px -20px rgba(12, 4, 55, 0.45);
+  }
+  .menu a,
+  .mega li a {
+    display: block;
+    padding: 9px 12px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-radius: 3px;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+  .menu a:hover,
+  .mega li a:hover,
+  .menu a[aria-current],
+  .mega li a[aria-current] {
+    background: var(--ivory);
+    color: var(--indigo-2);
+  }
+  .mega {
+    left: 50%;
+    translate: -40% 0;
+    width: min(880px, 92vw);
+  }
+  .mega-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.9fr;
+    gap: 28px;
+    padding: 28px;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: var(--radius);
+    box-shadow: 0 30px 80px -24px rgba(12, 4, 55, 0.5);
+  }
+  .mega ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mega-title {
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin: 0 0 10px 12px;
+  }
+  .mega-card {
+    position: relative;
+    border-radius: 999px 999px 4px 4px / 40% 40% 4px 4px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--ivory);
+    min-height: 220px;
+  }
+  .mega-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+  .mega-card:hover img {
+    transform: scale(1.05);
+  }
+  .mega-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12, 4, 55, 0.85), transparent 60%);
+  }
+  .mega-card > span {
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    z-index: 1;
+    font-family: var(--serif);
+    font-size: 1.5rem;
+  }
+  .header-cta {
+    padding: 12px 22px;
+  }
+
+  .burger {
+    display: none;
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(245, 241, 232, 0.3);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ivory);
+    cursor: pointer;
+  }
+  .lines {
+    display: grid;
+    gap: 6px;
+    justify-items: center;
+  }
+  .lines i {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.3s var(--ease);
+  }
+  .open .lines i:first-child {
+    transform: translateY(3.75px) rotate(45deg);
+  }
+  .open .lines i:last-child {
+    transform: translateY(-3.75px) rotate(-45deg);
+  }
+  .drawer {
+    height: calc(100dvh - 74px);
+    overflow-y: auto;
+    padding: 12px 0 40px;
+    border-top: 1px solid var(--line-dark);
+  }
+  .drawer nav {
+    display: grid;
+    gap: 2px;
+  }
+  .drawer summary,
+  .drawer-link {
+    display: block;
+    padding: 16px 0;
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    line-height: 1.1;
+    color: var(--ivory);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-dark);
+    cursor: pointer;
+    list-style: none;
+  }
+  .drawer summary::-webkit-details-marker {
+    display: none;
+  }
+  .drawer summary::after {
+    content: "+";
+    float: right;
+    font-family: var(--sans);
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .drawer details[open] summary::after {
+    content: "−";
+  }
+  .drawer ul {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0 16px;
+  }
+  .drawer li a {
+    display: block;
+    padding: 9px 0;
+    color: rgba(245, 241, 232, 0.82);
+    text-decoration: none;
+  }
+  .drawer-group {
+    margin-top: 10px;
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .drawer .btn {
+    margin-top: 28px;
+    justify-self: start;
+  }
+
+  @media (max-width: 1080px) {
+    .primary,
+    .header-cta {
+      display: none;
+    }
+    .burger {
+      display: block;
+    }
+    .bar {
+      height: 74px;
+    }
+    .brand img {
+      height: 46px;
+    }
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import NewsCard from "../../components/NewsCard.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import posts from "../../data/posts.json";
+---
+
+<Base title="News & Insights" description="News and insights from Bin Othaimeen Group on strategy, digital marketing and doing business in Saudi Arabia and the GCC.">
+  <PageHero
+    eyebrow="News & events"
+    title="News &amp; <em>insights.</em>"
+    lede="Perspectives from our team on strategy, marketing and doing business in Saudi Arabia and the wider GCC."
+    crumbs={[{ label: "News" }]}
+  />
+  <section class="section paper on-light">
+    <div class="wrap grid-2">
+      {posts.map((p, i) => <NewsCard post={p} index={i} />)}
+    </div>
+  </section>
+  <CtaBand />
+</Base>

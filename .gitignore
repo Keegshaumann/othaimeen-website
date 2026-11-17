@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+# raw HTML cached by scripts/import-wp.py
+.import-cache/
+# never commit live mail credentials
+server/api/config.local.php
+.claude/

@@ -1,0 +1,225 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import Star from "../components/Star.astro";
+import { SITE } from "../site";
+
+const reasons = ["Inquiry", "Book a call", "General comments", "Complaint", "Careers"];
+const areas = ["General", "Advisory / Consulting", "Marketing", "SEO", "Market Entry", "Leadcrystal"];
+---
+
+<Base
+  title="Contact Us"
+  description="Contact Bin Othaimeen Group in the Diplomatic Quarter, Riyadh. Client, recruiting and press enquiries, or send us a message."
+  jsonLd={[
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      url: "https://othaimeengrp.com/contact/",
+      mainEntity: { "@id": "https://othaimeengrp.com/#organization" },
+    },
+  ]}
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Let's craft success <em>together.</em>"
+    lede="Please let us know if you have a question, want to leave a comment, or would like further information about Bin Othaimeen Group."
+    crumbs={[{ label: "Contact" }]}
+  />
+
+  <section class="section paper on-light">
+    <div class="wrap layout">
+      <aside class="details" data-reveal>
+        <div class="block">
+          <p class="eyebrow">Client inquiries</p>
+          <address>
+            {SITE.address.map((l) => <span>{l}</span>)}
+          </address>
+          <p><a class="mail" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+          <dl class="hours">
+            {
+              SITE.hours.map(([d, h]) => (
+                <>
+                  <dt>{d}</dt>
+                  <dd>{h}</dd>
+                </>
+              ))
+            }
+          </dl>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Recruiting inquiries</p>
+          <p class="muted">For more information regarding current career opportunities, please contact our Recruiting Manager.</p>
+          <p><a class="mail" href={`mailto:${SITE.recruiting}`}>{SITE.recruiting}</a></p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Press inquiries</p>
+          <p class="muted">Members of the press who would like to speak with someone at Bin Othaimeen, please contact our Press Liaison.</p>
+          <p><a class="mail" href={`mailto:${SITE.press}`}>{SITE.press}</a></p>
+        </div>
+      </aside>
+
+      <div class="form-card" id="enquiry" data-reveal style="--d:1">
+        <div class="form-head">
+          <Star />
+          <h2 class="h-md">Send us a message</h2>
+        </div>
+        <p class="notice" data-sent hidden>Thank you. Your message is with our team and we will be in touch shortly.</p>
+        <form action="/api/contact.php" method="post" data-form novalidate>
+          <input type="hidden" name="type" value="contact" />
+          <input type="hidden" name="ts" value="" data-ts />
+          <div class="hp" aria-hidden="true">
+            <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="reason">Reason for contact *</label>
+              <select id="reason" name="reason" required>
+                {reasons.map((r) => <option value={r}>{r}</option>)}
+              </select>
+            </div>
+            <div class="field">
+              <label for="area">Area of interest *</label>
+              <select id="area" name="area" required>
+                {areas.map((a) => <option value={a}>{a}</option>)}
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Full name *</label>
+              <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" />
+            </div>
+            <div class="field">
+              <label for="company">Company</label>
+              <input id="company" name="company" type="text" autocomplete="organization" maxlength="160" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" autocomplete="email" required maxlength="160" />
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required maxlength="5000"></textarea>
+          </div>
+          <button class="btn btn-ink" type="submit">Send message <span class="arrow" aria-hidden="true">→</span></button>
+          <p class="form-status" data-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="map dark">
+    <div class="wrap map-inner">
+      <p class="eyebrow">Find us</p>
+      <p class="h-lg">Diplomatic Quarter, <em>Riyadh.</em></p>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Diplomatic+Quarter+Riyadh+Saudi+Arabia" rel="noopener" target="_blank">
+        Open in Google Maps <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<script is:inline>
+  (function () {
+    var q = new URLSearchParams(location.search);
+    if (q.get("sent")) {
+      var n = document.querySelector("[data-sent]");
+      if (n) n.hidden = false;
+    }
+    var r = q.get("reason");
+    if (r === "call") {
+      var s = document.getElementById("reason");
+      if (s) s.value = "Book a call";
+    }
+  })();
+</script>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.3fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .block {
+    padding: 0 0 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .block:last-child {
+    border-bottom: 0;
+  }
+  .block .eyebrow {
+    margin-bottom: 14px;
+  }
+  address {
+    font-style: normal;
+    display: grid;
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    line-height: 1.25;
+    color: var(--indigo);
+    margin-bottom: 14px;
+  }
+  .mail {
+    color: var(--indigo-2);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    font-weight: 500;
+  }
+  .hours {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 18px;
+    margin: 0;
+    font-size: 0.94rem;
+  }
+  .hours dt {
+    color: var(--muted);
+  }
+  .hours dd {
+    margin: 0;
+  }
+  .form-card {
+    background: var(--ivory);
+    padding: clamp(28px, 4vw, 52px);
+    border-radius: var(--radius);
+    scroll-margin-top: 110px;
+  }
+  .form-head {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 26px;
+  }
+  .form-head :global(.star) {
+    color: var(--gold-deep);
+  }
+  .form-head h2 {
+    margin: 0;
+    color: var(--indigo);
+  }
+  .map {
+    padding: clamp(56px, 7vw, 96px) 0;
+    background:
+      linear-gradient(90deg, var(--night) 35%, rgba(12, 4, 55, 0.55)),
+      url("/images/photo/riyadh-skyline-1200.webp") center / cover;
+  }
+  .map-inner p.h-lg {
+    font-family: var(--serif);
+    margin: 0 0 28px;
+  }
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

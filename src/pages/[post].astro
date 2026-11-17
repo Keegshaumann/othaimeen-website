@@ -1,0 +1,77 @@
+---
+// News articles keep their old WordPress URLs at the site root (/<slug>/).
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import NewsCard from "../components/NewsCard.astro";
+import CtaBand from "../components/CtaBand.astro";
+import posts from "../data/posts.json";
+import { SITE } from "../site";
+
+export function getStaticPaths() {
+  return posts.map((p) => ({ params: { post: p.slug }, props: { post: p } }));
+}
+const { post } = Astro.props as { post: (typeof posts)[number] };
+const others = posts.filter((p) => p.slug !== post.slug);
+const date = new Date(post.date + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const image = post.image ? `/images/posts/${post.slug}-1200.webp` : undefined;
+---
+
+<Base
+  title={post.title}
+  description={post.excerpt}
+  image={image}
+  type="article"
+  jsonLd={[
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: post.title,
+      datePublished: post.date,
+      dateModified: post.modified,
+      image: image ? `${SITE.url}${image}` : undefined,
+      author: { "@type": "Organization", name: SITE.name },
+      publisher: { "@id": `${SITE.url}/#organization` },
+      mainEntityOfPage: `${SITE.url}/${post.slug}/`,
+    },
+  ]}
+>
+  <PageHero eyebrow={date} title={post.title} lede={post.excerpt} crumbs={[{ label: "News", href: "/news/" }, { label: "Article" }]} />
+
+  <article class="section paper on-light">
+    <div class="wrap narrow">
+      {image && <img class="lead-img" src={image} alt={post.imageAlt || ""} width="1200" height="750" />}
+      <div class="prose" set:html={post.html} />
+    </div>
+  </article>
+
+  {
+    others.length > 0 && (
+      <section class="section-tight ivory on-light">
+        <div class="wrap">
+          <p class="eyebrow">Keep reading</p>
+          <div class="grid-2">
+            {others.slice(0, 2).map((p, i) => (
+              <NewsCard post={p} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+  <CtaBand />
+</Base>
+
+<style>
+  .lead-img {
+    width: 100%;
+    border-radius: var(--radius);
+    margin: 0 0 48px;
+  }
+  .prose {
+    font-size: 1.06rem;
+  }
+  .prose :global(h2),
+  .prose :global(h3) {
+    color: var(--indigo);
+  }
+</style>

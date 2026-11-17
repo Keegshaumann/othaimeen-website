@@ -1,0 +1,143 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { SITE } from "../../site";
+
+const faqs = [
+  [
+    "What does Bin Othaimeen Group do?",
+    "Bin Othaimeen Group specializes in providing top-tier business advisory, trading, and marketing services to clients interested in doing business within the GCC. We assist clients in navigating and excelling within the dynamic GCC market landscape.",
+  ],
+  [
+    "What industries do you specialize in?",
+    "Bin Othaimeen Group has expertise in diverse sectors including Hospitality & Entertainment, Food & Beverage, Sports & Wellness, Art & Culture, and Digital Services within the GCC region.",
+  ],
+  [
+    "What are the benefits of working with Bin Othaimeen Group?",
+    "Employees enjoy a dynamic work environment, growth opportunities, exposure to regional projects, and a collaborative team culture centered around excellence and innovation.",
+  ],
+];
+---
+
+<Base
+  title="Careers"
+  description="Build your career at Bin Othaimeen Group in Riyadh: regional projects, professional growth and a collaborative culture centred on excellence and innovation."
+>
+  <PageHero
+    eyebrow="Careers"
+    title="A world of <em>limitless possibilities.</em>"
+    lede="Embarking on a career with Bin Othaimeen Group means stepping into a world of unparalleled growth and professional fulfillment."
+    image="/images/photo/riyadh-aerial-600.webp"
+    imageAlt="Aerial view of the Riyadh skyline"
+    crumbs={[{ label: "About", href: "/company-overview/" }, { label: "Careers" }]}
+  />
+
+  <section class="section paper on-light">
+    <div class="wrap grid-2">
+      <div class="prose" data-reveal>
+        <p>
+          At the very heart of our success lies a deep-seated commitment to nurturing talent, fostering innovation, and rewarding
+          excellence. As part of our team, you wouldn't just be taking up a job, but rather embracing a journey of self-discovery,
+          skill enhancement, and legacy-building. Our diverse array of services, coupled with a robust presence in the GCC region,
+          provides a unique vantage point to witness and influence the dynamic interplay of culture, business, and innovation.
+        </p>
+        <p>
+          Each day at Bin Othaimeen brings fresh challenges, new learning opportunities, and the exhilarating thrill of shaping the
+          future. Our ethos is built on collaboration, continual learning, and a steadfast dedication to achieving greatness. Joining us
+          means becoming part of a family that celebrates each achievement, supports every endeavor, and dreams boundlessly. For the
+          ambitious, the passionate, and the visionary, there's no place quite like Bin Othaimeen Group to truly realize one's potential.
+        </p>
+        <h2>Benefits and rewards</h2>
+        <p>
+          Joining the Bin Othaimeen Group means more than just securing a job: it's an invitation to shape your future amidst a company
+          that highly values its employees. Our team members are the backbone of our success, and in recognition of this, we offer
+          generous remuneration packages that stand out in the industry. Beyond the attractive salary, employees are entitled to
+          substantial annual leave, allowing a well-deserved rest and rejuvenation.
+        </p>
+        <p>
+          What truly sets us apart is the invigorating and positive work culture that we cultivate: a space where innovation thrives,
+          ideas are celebrated, and every individual's contribution is recognized. We provide boundless opportunities for professional
+          growth, continual education, and the chance to network across a spectrum of industries.
+        </p>
+      </div>
+      <div data-reveal style="--d:1">
+        <div class="faq">
+          {
+            faqs.map(([q, a], i) => (
+              <details open={i === 0}>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))
+          }
+        </div>
+        <div class="open dark">
+          <p class="eyebrow">Open positions</p>
+          <h2 class="h-md">There are no advertised vacancies right now.</h2>
+          <p>
+            We are always glad to hear from talented people. Send your CV and a short note about the role you are looking for to our
+            recruiting team.
+          </p>
+          <a class="btn" href={`mailto:${SITE.recruiting}?subject=Career%20enquiry`}>{SITE.recruiting}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .prose h2 {
+    color: var(--indigo);
+  }
+  .faq {
+    border-top: 1px solid var(--line);
+    margin-bottom: 36px;
+  }
+  details {
+    border-bottom: 1px solid var(--line);
+  }
+  summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 22px 36px 22px 0;
+    position: relative;
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--indigo);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: "+";
+    position: absolute;
+    right: 4px;
+    top: 20px;
+    font-family: var(--sans);
+    font-weight: 300;
+    color: var(--gold-deep);
+  }
+  details[open] summary::after {
+    content: "−";
+  }
+  details p {
+    color: var(--muted);
+    padding-right: 24px;
+  }
+  .open {
+    padding: 34px 32px;
+    border-radius: var(--radius);
+  }
+  .open p:not(.eyebrow) {
+    color: rgba(245, 241, 232, 0.78);
+  }
+  .open .btn {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 0.95rem;
+  }
+</style>

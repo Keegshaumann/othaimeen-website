@@ -1,0 +1,111 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { GROUPS, servicesIn, serviceUrl } from "../../site";
+---
+
+<Base
+  title="Services: Advisory, Marketing and GCC Market Entry"
+  description="Bin Othaimeen Group services: GCC market entry, sector advisory for sports, hospitality, food and beverage, art and culture, plus digital marketing, strategy, brand representation, SEO and content."
+>
+  <PageHero
+    eyebrow="Services"
+    title="Expertise for every stage of your <em>GCC journey.</em>"
+    lede="From first market study to brand launch and growth, our advisory and marketing teams work as one, backed by an extensive local network and global partners."
+    crumbs={[{ label: "Services" }]}
+  />
+
+  {
+    GROUPS.map((g, gi) => (
+      <section class:list={["section", gi % 2 ? "ivory" : "paper", "on-light"]} id={g.key}>
+        <div class="wrap">
+          <div class="head" data-reveal>
+            <p class="eyebrow">0{gi + 1} · {g.label}</p>
+            <p class="lede">{g.blurb}</p>
+          </div>
+          <div class="list">
+            {servicesIn(g.key).map((s, i) => (
+              <a class="svc" href={serviceUrl(s.slug)} data-reveal style={`--d:${i % 3}`}>
+                <div class="img">
+                  {s.image && (
+                    <img src={`/images/services/${s.slug}-640.webp`} alt="" width="640" height="400" loading="lazy" />
+                  )}
+                </div>
+                <h2>{s.menu}</h2>
+                <p>{s.summary.replace(/^.*?:\s*/, "")}</p>
+                <span class="link-arrow">
+                  Read more <span aria-hidden="true">→</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <CtaBand />
+</Base>
+
+<style>
+  .head {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: clamp(36px, 5vw, 64px);
+  }
+  .head .eyebrow {
+    font-size: 0.82rem;
+  }
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 3.4vw, 48px) clamp(20px, 2.4vw, 36px);
+  }
+  .svc {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .img {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 999px 999px 4px 4px / 34% 34% 4px 4px;
+    background: var(--night);
+    margin-bottom: 22px;
+  }
+  .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease);
+  }
+  .svc:hover .img img {
+    transform: scale(1.05);
+  }
+  h2 {
+    font-size: clamp(1.6rem, 2.2vw, 2rem);
+    color: var(--indigo);
+    margin-bottom: 0.4em;
+  }
+  p {
+    color: var(--muted);
+    flex: 1;
+  }
+  .link-arrow {
+    align-self: start;
+  }
+  @media (max-width: 1000px) {
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 700px) {
+    .head,
+    .list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

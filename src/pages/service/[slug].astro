@@ -1,0 +1,271 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Star from "../../components/Star.astro";
+import services from "../../data/services.json";
+import { GROUPS, servicesIn, serviceUrl, type Service } from "../../site";
+import { parseService } from "../../lib/blocks";
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { service: s } }));
+}
+
+const { service } = Astro.props as { service: Service };
+const group = GROUPS.find((g) => g.key === service.group)!;
+const { tagline, lede, nodes } = parseService(service.blocks, service.title);
+const siblings = servicesIn(service.group).filter((s) => s.slug !== service.slug);
+const img = service.image ? `/images/services/${service.image.split("/")[1].replace(/\.\w+$/, "")}` : null;
+const title = service.title.replace(/^Strategic planning$/i, "Strategic Planning");
+const description = service.seoDescription || service.summary;
+---
+
+<Base
+  title={`${title} in Saudi Arabia and the GCC`}
+  description={description}
+  image={img ? `${img}-1200.webp` : undefined}
+  jsonLd={[
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: title,
+      serviceType: group.label,
+      description,
+      areaServed: ["SA", "AE", "QA", "KW", "BH", "OM"],
+      provider: { "@id": "https://othaimeengrp.com/#organization" },
+    },
+  ]}
+>
+  <PageHero
+    eyebrow={group.label}
+    title={title}
+    lede={tagline ? `${tagline}. ${service.summary.replace(/^.*?:\s*/, "")}` : service.summary.replace(/^.*?:\s*/, "")}
+    image={img ? `${img}-640.webp` : undefined}
+    imageAlt={service.imageAlt || `${title}, Bin Othaimeen Group, Riyadh`}
+    crumbs={[{ label: "Services", href: "/services/" }, { label: title }]}
+  />
+
+  <section class="section paper on-light">
+    <div class="wrap layout">
+      <article class="body">
+        {lede && <p class="standfirst" data-reveal>{lede}</p>}
+        {
+          nodes.map((n) => {
+            if (n.type === "heading") return <h2 class="h-md" data-reveal>{n.text}</h2>;
+            if (n.type === "sub") return <p class="sub" data-reveal>{n.text}</p>;
+            if (n.type === "p") return <p class="para" data-reveal>{n.text}</p>;
+            if (n.type === "list")
+              return (
+                <ul class="checks" data-reveal>
+                  {n.items.map((it) => (
+                    <li>
+                      <Star />
+                      <span>
+                        {it.label && <strong>{it.label}. </strong>}
+                        {it.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              );
+            return (
+              <div class:list={["cards", { bare: !n.items[0]?.text }]}>
+                {n.items.map((it, i) => (
+                  <div class="svc-card" data-reveal style={`--d:${i % 3}`}>
+                    <span class="num">{String(i + 1).padStart(2, "0")}</span>
+                    <h3>{it.title}</h3>
+                    {it.text && <p>{it.text}</p>}
+                  </div>
+                ))}
+              </div>
+            );
+          })
+        }
+      </article>
+
+      <aside class="side">
+        <div class="help dark">
+          <p class="eyebrow">How can we help you?</p>
+          <p>Ready to elevate your business in the GCC? Reach out and let's craft success together.</p>
+          <a class="btn" href="/contact/">Get in touch <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <nav class="more" aria-label={`More ${group.label} services`}>
+          <p class="eyebrow">{group.label}</p>
+          <ul>
+            {
+              siblings.map((s) => (
+                <li>
+                  <a href={serviceUrl(s.slug)}>
+                    {s.menu} <span aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <a class="lc" href="/leadcrystal/">
+          <img src="/images/photo/leadcrystal-hero-700.webp" alt="Leadcrystal: Energy Evolved. Lead crystal energy solutions" width="700" height="263" loading="lazy" />
+          <span>Our brand: Leadcrystal energy storage <span aria-hidden="true">→</span></span>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .body {
+    max-width: 760px;
+  }
+  .standfirst {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 2.6vw, 2.25rem);
+    line-height: 1.18;
+    color: var(--indigo);
+    margin-bottom: 1.2em;
+  }
+  .body h2 {
+    margin-top: 1.6em;
+    color: var(--indigo);
+  }
+  .sub {
+    font-weight: 650;
+    font-size: 1.05rem;
+    color: var(--indigo-2);
+    margin-top: 1.8em;
+  }
+  .para {
+    color: #2e2945;
+  }
+  .checks {
+    list-style: none;
+    padding: 0;
+    margin: 0.6em 0 1.6em;
+    display: grid;
+    gap: 14px;
+  }
+  .checks li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--ivory);
+    border-radius: var(--radius);
+  }
+  .checks :global(.star) {
+    color: var(--gold-deep);
+    margin-top: 3px;
+  }
+  .checks strong {
+    color: var(--indigo);
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 1em 0 2em;
+  }
+  .cards.bare {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .svc-card {
+    background: var(--paper);
+    padding: 26px 24px 28px;
+    transition: background 0.3s var(--ease);
+  }
+  .svc-card:hover {
+    background: var(--ivory);
+  }
+  .num {
+    font-size: 0.74rem;
+    font-weight: 650;
+    letter-spacing: 0.2em;
+    color: var(--gold-deep);
+  }
+  .svc-card h3 {
+    font-size: 1.45rem;
+    margin: 10px 0 8px;
+    color: var(--indigo);
+  }
+  .bare .svc-card h3 {
+    margin-bottom: 0;
+    font-size: 1.3rem;
+  }
+  .svc-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+  .side {
+    position: sticky;
+    top: 104px;
+    display: grid;
+    gap: 22px;
+  }
+  .help {
+    padding: 30px 28px;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .help p:not(.eyebrow) {
+    color: rgba(245, 241, 232, 0.8);
+  }
+  .more {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 24px 12px;
+  }
+  .more ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .more a {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .more a:hover {
+    color: var(--indigo-2);
+  }
+  .lc {
+    display: block;
+    text-decoration: none;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--night);
+    color: var(--ivory);
+  }
+  .lc span {
+    display: block;
+    padding: 14px 18px;
+    font-size: 0.92rem;
+  }
+  @media (max-width: 1000px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .side {
+      position: static;
+    }
+  }
+  @media (max-width: 640px) {
+    .cards,
+    .cards.bare {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
