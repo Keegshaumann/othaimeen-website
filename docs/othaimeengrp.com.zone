@@ -1,0 +1,35 @@
+$ORIGIN othaimeengrp.com.
+$TTL 600
+; othaimeengrp.com as served by Effentii (ns1/ns2.servconfig.com) on 17 Nov 2026, for import at Porkbun.
+; Website and mail still point at Effentii (216.194.167.167) until they move to Hostinger.
+; BOG VPS services point at 187.127.224.214.
+@                 IN A      216.194.167.167
+www               IN CNAME  othaimeengrp.com.
+crm               IN A      187.127.224.214
+erp               IN A      187.127.224.214
+pim               IN A      187.127.224.214
+portal            IN A      187.127.224.214
+webhook           IN A      187.127.224.214
+@                 IN MX 10  res354.servconfig.com.
+mail              IN CNAME  othaimeengrp.com.
+webmail           IN A      216.194.167.167
+autoconfig        IN A      216.194.167.167
+autodiscover      IN A      216.194.167.167
+cpanel            IN A      216.194.167.167
+whm               IN A      216.194.167.167
+webdisk           IN A      216.194.167.167
+ftp               IN A      216.194.167.167
+cpcalendars       IN A      216.194.167.167
+cpcontacts        IN A      216.194.167.167
+chuckecheesethemeparkrp     IN A   216.194.167.167
+www.chuckecheesethemeparkrp IN A   216.194.167.167
+chuckecheesethemeparkrp     IN TXT "v=spf1 +a +mx +ip4:104.247.74.88 include:relay.mailchannels.net +ip4:216.194.167.167 +ip4:96.126.112.222 ~all"
+@                 IN TXT    "v=spf1 +a +mx +ip4:216.194.167.167 include:relay.mailchannels.net -all"
+_dmarc            IN TXT    "v=DMARC1;p=quarantine;sp=none;adkim=r;aspf=r;pct=100;fo=0;rf=afrf;ri=86400;rua=mailto:dmarc@othaimeengrp.com;ruf=mailto:dmarc@othaimeengrp.com"
+default._domainkey IN TXT   "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2kmvd5uaKcdR3++YRjwKqzf3LmC59bNAqYn+WSptgZE3S/tahXEtk7OJurzjwzho17z2FZUl5nwj8F/gQvGTiBu7ezu9BhrU5gWKnCC8bB4JpTmWYpLS08HBK8JH0kh4hS3EG+CUfiKx8RKGE8SErYqHJAi4ZNqV6Sd7E3CPL1irGq5DEXHpfpN+BqdQbWWvV" "VLQkNDf+pZ0t9ZsNkjglKCHk7QaoFhVMglCRHMaiD1Hl5sXVLHMs58bnT32AebsoFmFk5h8LydoMlnDLSWjG9h/QhJRUk/z0enF/B6T7wHk9LgVUP7DBBTfHfkUCsrnuMHsOP/XOiMizLCOoDaQTwIDAQAB;"
+_mailchannels     IN TXT    "v=mc1 auth=inmotionhosting"
+_autodiscover._tcp IN SRV 0 0 443  cpanelemaildiscovery.cpanel.net.
+_caldav._tcp      IN SRV 0 0 2079 othaimeengrp.com.
+_caldavs._tcp     IN SRV 0 0 2080 othaimeengrp.com.
+_carddav._tcp     IN SRV 0 0 2079 othaimeengrp.com.
+_carddavs._tcp    IN SRV 0 0 2080 othaimeengrp.com.
